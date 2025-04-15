@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Container, Col, Card, Button, Row } from "react-bootstrap"
-import Result, { Welcome } from "./types"
+import { Welcome, Result } from "./types"
 import { useState } from "react"
 const MyBooks = function () {
   const URL = "https://api.spaceflightnewsapi.net/v4/articles"
@@ -26,7 +26,7 @@ const MyBooks = function () {
 
   return (
     <>
-      <Container>
+      <Container className="mb-3">
         <Row className="g-4">
           {books.map((article) => (
             <Col key={article.id} xs={12} md={5} lg={6}>
@@ -39,7 +39,8 @@ const MyBooks = function () {
                 <Card.Body>
                   <Card.Title>{article.title}</Card.Title>
                   <Card.Text>{article.summary}</Card.Text>
-                  <Card.Text>{article.published_at}</Card.Text>
+
+                  <Card.Text>{article.news_site}</Card.Text>
                   <Button
                     variant="primary"
                     href={article.url}
