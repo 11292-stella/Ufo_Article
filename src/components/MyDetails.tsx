@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
-import { Result, Welcome } from "./types"
+import { Result } from "./types"
 import { Card, Button } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 const MyDetails = function () {
-  const URL = "https://api.spaceflightnewsapi.net/v4/articles/"
-  const [article, setArticle] = useState<Result[]>([])
+  const { id } = useParams()
+  const [article, setArticle] = useState<Result | null>(null)
+
   useEffect(() => {
-    fetch(URL)
+    fetch(`https://api.spaceflightnewsapi.net/v4/articles/${id}`)
       .then((response) => {
         if (response.ok) {
           return response.json()
@@ -15,28 +16,31 @@ const MyDetails = function () {
           throw new Error("errore")
         }
       })
-      .then((data: Welcome) => {
-        setArticle(data.results)
+      .then((data: Result) => {
+        setArticle(data)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [])
+  }, [id])
+
   return (
     <>
-      {article.map((author, i) => (
-        <Card key={i}>
-          <Card.Img variant="top" src={author.image_url} />
+      {article && (
+        <Card className="mb-4 shadow-sm">
+          <Card.Img variant="top" src={article.image_url} />
           <Card.Body>
-            <Card.Title>{author.title}</Card.Title>
-            <Card.Text>{author.summary}</Card.Text>
-            <Card.Text>{author.news_site}</Card.Text>
+            <Card.Title>{article.title}</Card.Title>
+            <Card.Text>{article.summary}</Card.Text>
+            <Card.Text>
+              <strong>Fonte:</strong> {article.news_site}
+            </Card.Text>
             <Link className="ms-2" to={`/`}>
-              <Button>altri articoli</Button>
+              <Button>Torna agli articoli</Button>
             </Link>
           </Card.Body>
         </Card>
-      ))}
+      )}
     </>
   )
 }
