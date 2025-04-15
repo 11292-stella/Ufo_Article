@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Container, Col, Card, Button, Row } from "react-bootstrap"
 import { Welcome, Result } from "./types"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 const MyBooks = function () {
   const URL = "https://api.spaceflightnewsapi.net/v4/articles"
   const [books, setBooks] = useState<Result[]>([])
@@ -49,6 +50,9 @@ const MyBooks = function () {
                   >
                     Leggi di più
                   </Button>
+                  <Link className="ms-2" to={"/article/:id"}>
+                    <Button>altri articoli</Button>
+                  </Link>
                 </Card.Body>
               </Card>
             </Col>
