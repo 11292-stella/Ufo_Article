@@ -30,7 +30,7 @@ const MyBooks = function () {
       <Container className="mb-3">
         <Row className="g-4">
           {books.map((article) => (
-            <Col key={article.id} xs={12} md={5} lg={6}>
+            <Col key={article.id} xs={12} sm={6} md={4} lg={4}>
               <Card>
                 <Card.Img
                   variant="top"
@@ -50,7 +50,7 @@ const MyBooks = function () {
                   >
                     Leggi di più
                   </Button>
-                  <Link className="ms-2" to={"/article/:id"}>
+                  <Link className="ms-2" to={`/article/${article.id}`}>
                     <Button>altri articoli</Button>
                   </Link>
                 </Card.Body>
